@@ -1,8 +1,10 @@
 function studDetails(){
-
+    
 	var key = $('#key').val();
 	var selected = "selected";
 
+    //alert(key)
+    
 	if(key == ""){
 
 		alert("Please Choose a student");

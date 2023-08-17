@@ -128,7 +128,7 @@
                       <img class="img-circle elevation-2" src="../<?= $subdesc['profile_pic'] ?>" alt="User Avatar">
                     </div>
                     <!-- /.widget-user-image -->
-                    <h3 class="widget-user-username"><?= $subdesc['firstname'].' '.$subdesc['lastname'] ?></h3>
+                    <h3 class="widget-user-username"><?= $subdesc['lastname'].', '.$subdesc['firstname'] ?></h3>
                     <label class="widget-user-desc"> Student </label>
                     <div class="row">
                       <a href="studentProfile.php?studKey=<?= $subdesc['userId'] ?>" class="btn btn-xs btn-primary col-12"> View Profile </a>
@@ -144,6 +144,8 @@
 
               } else {
 
+                //echo '<script>alert("No Subject Assigned");location.href="../"</script>';
+
           ?>
 
             <h3 class="col-12 alert alert-sm alert-info text-center"> No student assigned for this class </h3>
@@ -153,9 +155,11 @@
 
           } else {
 
+            echo '<script>alert("No Subject Assigned");location.href="../"</script>';
+
         ?>
 
-        <h3 class="col-12 alert alert-sm alert-info text-center"> No subject assign for this class </h3>
+        <!--<h3 class="col-12 alert alert-sm alert-info text-center"> No subject assign for this class </h3>-->
 
           }
 

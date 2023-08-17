@@ -8,6 +8,7 @@
 
 		$key = $conn->real_escape_string($_POST['key']);
 		$syear = $_SESSION['schoolyear'];
+        //$syear = "22";
 
 		$func = new functions($conn);
 
@@ -32,13 +33,13 @@
 			$response = array('response'=>true,
 							  'studid'=>$data['accid'],
 							  'lrn'=>$data['lrn'],
-							  'firstname'=>$data['firstname'],
-							  'middlename'=>$data['middlename'],
-							  'surname'=>$data['surname'],
+							  'firstname'=>utf8_encode($data['firstname']),
+							  'middlename'=>utf8_encode($data['middlename']),
+							  'surname'=>utf8_encode($data['surname']),
 							  'sms_notif_num'=>$data['sms_notif_num'],
-							  'nameofmother'=>$data['nameofmother'],
+							  'nameofmother'=>utf8_encode($data['nameofmother']),
 							  'm_contactnumber'=>$data['m_contactnumber'],
-							  'nameoffather'=>$data['nameoffather'],
+							  'nameoffather'=>utf8_encode($data['nameoffather']),
 							  'f_contactnumber'=>$data['f_contactnumber'],
 							  'gradeLevel'=>$data['gradeid'],
 							  'section'=>$data['sectionid'],

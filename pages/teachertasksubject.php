@@ -26,7 +26,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h4 class="m-0 text-dark">Subjects</h4>
+            <h4 class="m-0 text-dark">Performance Task Subjects</h4>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -84,7 +84,7 @@
 
                     <div class="info-box-content">
                       <span class="info-box-text"><?= $subdesc['description'] ?></span>
-                      <span class="info-box-number"> <a href="modules.php?classkey=<?= $_GET['subkey'] ?>&seckey=<?= $_GET['seckey'] ?>&key=<?= $subdesc['subjectid'] ?>"> View Modules </a> </span>
+                      <span class="info-box-number"> <a href="teachertasklist.php?classkey=<?= $_GET['subkey'] ?>&seckey=<?= $_GET['seckey'] ?>&key=<?= $subdesc['subjectid'] ?>"> Performance Tasks </a> </span>
                     </div>
                     <!-- /.info-box-content -->
                   </div>
@@ -96,7 +96,7 @@
 
               } else {
 
-                 echo '<script>alert("No Subject Assigned");location.href="../"</script>';
+                 echo '<script>alert("No Subject Assigned");location.href="teacherquizzes.php"</script>';
 
           ?>
 

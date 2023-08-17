@@ -48,10 +48,10 @@
 
             if(isset($_GET['subkey'])){
 
-              $subjectsdetails = $func->teacher_subject($_GET['subkey']);
               $seckey = $conn->real_escape_string($_GET['seckey']);
+              $subjectsdetails = $func->teacher_subject($_GET['subkey'], $seckey);
 
-              $section = $conn->query("SELECT * FROM tblschool_section WHERE sectionid = \"$seckey\" AND adviserid = ".$_SESSION['user_id']);
+              $section = $conn->query("SELECT * FROM tblschool_section WHERE sectionid = \"$seckey\"");
 
               if($section->num_rows > 0){
 
@@ -96,9 +96,11 @@
 
               } else {
 
+                 echo '<script>alert("No Subject Assigned");location.href="teacherquizzes.php"</script>';
+
           ?>
 
-            <h3 class="col-12 alert alert-sm alert-info text-center"> No subject assign for this class </h3>
+            <!--<h3 class="col-12 alert alert-sm alert-info text-center"> No subject assign for this class </h3>-->
 
           <?php
             }

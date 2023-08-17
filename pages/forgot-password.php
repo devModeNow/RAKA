@@ -111,6 +111,7 @@
   <link rel="icon" type="icon/image" href="../images/school.logo.png">
 </head>
 <body class="hold-transition login-page">
+<div class="trans"></div>
   <?php echo $message ?>
 <div class="login-box">
     <div class="login-logo">

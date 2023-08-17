@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jul 26, 2020 at 06:48 PM
+-- Generation Time: Aug 01, 2020 at 12:52 AM
 -- Server version: 10.3.12-MariaDB
 -- PHP Version: 7.2.14
 
@@ -424,26 +424,7 @@ CREATE TABLE IF NOT EXISTS `portal_announcement` (
   `announceStat` int(11) NOT NULL DEFAULT 1,
   `announceDate` datetime DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `portal_announcement`
---
-
-INSERT INTO `portal_announcement` (`id`, `announcement`, `audience`, `announcedBy`, `announceStat`, `announceDate`) VALUES
-(1, 'Good Morning', NULL, '1196', 0, '2020-07-20 08:49:35'),
-(2, 'nani?', NULL, '1196', 0, '2020-07-20 09:03:42'),
-(3, 'nani?', NULL, '1196', 0, '2020-07-20 09:05:07'),
-(4, 'sadad', NULL, '1196', 0, '2020-07-20 09:09:47'),
-(5, 'jhfjh', NULL, '1196', 1, '2020-07-20 09:13:15'),
-(6, 'gandang hapon', NULL, '1192', 0, '2020-07-20 16:13:22'),
-(7, 'asdasdasasd', NULL, '1196', 1, '2020-07-20 22:32:13'),
-(8, 'New module uploaded for St. James and Reading subject. Thank you.', NULL, '1196', 1, '2020-07-21 00:09:14'),
-(9, 'Good night', NULL, '1196', 1, '2020-07-21 02:04:12'),
-(10, 'Jessica Sacyaben uploaded a new quiz.', NULL, '1196', 1, '2020-07-24 23:33:36'),
-(11, 'Jessica Sacyaben uploaded a new quiz.', NULL, '1196', 1, '2020-07-26 23:55:23'),
-(12, 'Jessica Sacyaben uploaded a new quiz.', NULL, '1196', 1, '2020-07-27 00:22:22'),
-(13, 'Jessica Sacyaben uploaded a new quiz.', NULL, '1196', 1, '2020-07-27 00:34:20');
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -485,36 +466,7 @@ CREATE TABLE IF NOT EXISTS `portal_messaging` (
   `datesent` varchar(50) DEFAULT NULL,
   `messagestat` int(11) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `portal_messaging`
---
-
-INSERT INTO `portal_messaging` (`id`, `fromrecepient`, `torecepient`, `message`, `exchange`, `datesent`, `messagestat`) VALUES
-(1, '44', '54641235', 'nani', '0', '07-19-20 12:54:37 AM', 1),
-(2, '44', '54641235', 'hola', '0', '07-19-20 12:56:46 AM', 1),
-(3, '1196', '1192', 'Happy Birthday ðŸ˜Š', '0', '07-20-20 02:05:08 AM', 1),
-(4, '1192', '1196', 'kjg', '1', '07-20-20 02:34:08 AM', 1),
-(5, '1196', '1192', 'nani?', '0', '07-20-20 02:35:47 AM', 1),
-(6, '1192', '1196', 'das', '1', '07-20-20 02:35:53 AM', 1),
-(7, '1196', '1192', 'musta?', '0', '07-20-20 02:36:05 AM', 1),
-(8, '1192', '1196', 'ok lang', '1', '07-20-20 02:36:12 AM', 1),
-(9, '1192', '1213', 'Hi John, Please check our lesson in Math today. thank you.', '0', '07-20-20 08:50:22 AM', 1),
-(10, '1196', '1243', 'ey', '0', '07-20-20 03:34:02 PM', 1),
-(11, '1243', '1175', 'ads', '0', '07-20-20 03:35:49 PM', 1),
-(12, '1196', '1175', 'MELI', '0', '07-20-20 03:41:00 PM', 1),
-(13, '1175', '1175', 'hahaha', '0', '07-20-20 04:04:03 PM', 1),
-(14, '1175', '1175', 'ako to ahh', '0', '07-20-20 04:04:14 PM', 1),
-(15, '1175', '1243', 'Nat!', '1', '07-20-20 04:04:30 PM', 1),
-(16, '1243', '1175', 'ow? :)', '0', '07-20-20 04:05:31 PM', 1),
-(17, '1175', '1243', 'pasok ka bukas?', '1', '07-20-20 04:05:43 PM', 1),
-(18, '1243', '1175', 'oo naman hahah', '0', '07-20-20 04:05:51 PM', 1),
-(19, '1175', '1243', 'ahh cge cge haha', '1', '07-20-20 04:06:00 PM', 1),
-(20, '1196', '1243', 'night na', '0', '07-20-20 06:04:39 PM', 1),
-(21, '1243', '1196', 'nigh ma\'am', '1', '07-20-20 06:04:58 PM', 1),
-(22, '1243', '1196', 'Night Ma\'am', '1', '07-26-20 04:28:00 PM', 1),
-(23, '1196', '1243', 'Good night nat', '0', '07-26-20 04:28:47 PM', 1);
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -559,7 +511,7 @@ CREATE TABLE IF NOT EXISTS `portal_quizzes` (
   `quiztype` varchar(50) NOT NULL,
   `dateuploaded` datetime NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 

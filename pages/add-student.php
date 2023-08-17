@@ -116,13 +116,13 @@
                     <option selected="selected" disabled value="">Choose Student</option>
                     <?php
 
-                    echo $syear = $_SESSION['schoolyear'];
-                    echo $secid = $conn->real_escape_string($_GET['seckey']);
-                    echo $glevel = $conn->real_escape_string($_GET['subkey']);
+                    $syear = $_SESSION['schoolyear'];
+                    $secid = $conn->real_escape_string($_GET['seckey']);
+                    $glevel = $conn->real_escape_string($_GET['subkey']);
 
                     //$selstuds = $func->studInfo();
-                    //$selstuds = $conn->query("SELECT * FROM tblschool_registration a INNER JOIN tblschool_studinfo b WHERE a.sectionid= \"$secid\" AND a.gradeid=\"$glevel\" AND a.sy_ayid=\"$syear\" AND a.accid=b.accid ORDER BY b.surname,b.firstname");
-                    $selstuds = $conn->query("SELECT * FROM tblschool_registration a INNER JOIN tblschool_studinfo b WHERE a.sectionid= \"4\" AND a.gradeid=\"2\" AND a.sy_ayid=\"20\" AND a.accid=b.accid ORDER BY b.surname,b.firstname");
+                    $selstuds = $conn->query("SELECT * FROM tblschool_registration a INNER JOIN tblschool_studinfo b WHERE a.sectionid= \"$secid\" AND a.gradeid=\"$glevel\" AND a.sy_ayid=\"$syear\" AND a.accid=b.accid ORDER BY b.surname,b.firstname");
+                    //$selstuds = $conn->query("SELECT  * FROM tblschool_registration a INNER JOIN tblschool_studinfo b WHERE a.sectionid='91' AND a.gradeid='2' AND a.sy_ayid='22' AND a.accid=b.accid ORDER BY b.surname,b.firstname");
 
                     if($selstuds->num_rows > 0){
 
@@ -130,7 +130,7 @@
 
                     ?>
 
-                    <option value="<?= $studata['accid'] ?>"><?= $studata['firstname'].' '.$studata['middlename'].' '.$studata['surname']?></option>
+                    <option value="<?= $studata['accid'] ?>"><?= utf8_encode($studata['surname']).', '.$studata['firstname'].' '.$studata['middlename']?></option>
 
                     <?php
 
@@ -166,21 +166,21 @@
             <!--<h5> Student Personal Details </h5>-->
             <div class="row">
               <div class="col-lg-4">
-                <input type="hidden" class="form-control" id="firstname" name="firstname" placeholder="First Name" required>
+                <input type="hidden" class="form-control" id="firstname" value="na" name="firstname" placeholder="First Name" required>
               </div>
               <div class="col-lg-4">
-                <input type="hidden" class="form-control" id="middlename" name="middlename" placeholder="Middle Name" required>
+                <input type="hidden" class="form-control" id="middlename" value="na" name="middlename" placeholder="Middle Name" required>
               </div>
               <div class="col-lg-4">
-                <input type="hidden" class="form-control" id="lastname" name="lastname" placeholder="Last Name" required>
+                <input type="hidden" class="form-control" id="lastname" value="na" name="lastname" placeholder="Last Name" required>
               </div>
             </div><br>
             <div class="row">
               <div class="col-lg-6">
-                <input type="number" maxlength="11" id="contact" minlength="11" name="contact" class="form-control" placeholder="Contact Number">
+                <input type="hidden" maxlength="11" id="contact" minlength="11" name="contact" class="form-control" value="01234567891" placeholder="Contact Number">
               </div>
               <div class="col-lg-6">
-                <input type="email" name="email" id="email" class="form-control" placeholder="Email" required>
+                <input type="hidden" name="email" id="email" class="form-control" placeholder="Email" value="email@email.com" required>
               </div>
             </div>
             <!--<h5> Parents Details </h5>-->

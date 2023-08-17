@@ -37,7 +37,7 @@
           <section class="col-12 ann_panel">
           <?php
 
-          $ann = $func->announcements();
+          $ann = $func->Studannouncements($sectionid);
 
           if($ann->num_rows > 0){
 

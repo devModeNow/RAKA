@@ -53,14 +53,8 @@
             $classId = $conn->real_escape_string($_GET['classkey']);
             $secId = $conn->real_escape_string($_GET['seckey']);
             $subId = $conn->real_escape_string($_GET['key']);
-
-            $select_sub = $conn->query("SELECT * FROM tblschool_subjects WHERE subjectid = \"$subId\"");
-            $subdesc = $select_sub->fetch_assoc();
-
-            $subdesc = $subdesc['description'];
-
             $acctype = "1";
-            $announcement = $_SESSION['fname']." ".$_SESSION['lname']." uploaded a new quiz on ".$subdesc." subject.";
+            $announcement = $_SESSION['fname']." ".$_SESSION['lname']." uploaded a new quiz.";
 
             $qtype = "creator";
 
@@ -79,7 +73,7 @@
               $filename = $conn->real_escape_string($_POST['filename']);
 
               $target_dir = "../uploads/quizzes/";
-              $target_file = $target_dir . basename($_FILES["file"]["name"]).rand(4,564841254);
+              $target_file = $target_dir . basename($_FILES["file"]["name"]);
               $uploadOk = 1;
               $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
@@ -90,7 +84,7 @@
 
                 if($insert == true){
 
-                  $query = $conn->query("INSERT INTO portal_announcement (announcement,audience,announcedBy) VALUES(\"$announcement\",\"$secId\",\"$user_id\")");
+                  $query = $conn->query("INSERT INTO portal_announcement (announcement, announcedBy) VALUES(\"$announcement\",\"$user_id\")");
 
                   if($query == true){
 
@@ -163,7 +157,7 @@
 
 
             //Check Quiz
-            /*if(isset($_GET['checkedstudId'])){
+            if(isset($_GET['checkedstudId'])){
 
               $id = $conn->real_escape_string($_GET['qid']);
               $checkedstudId = $conn->real_escape_string($_GET['checkedstudId']);
@@ -180,7 +174,7 @@
 
               }
 
-            }*/
+            }
 
             //Delete Quiz Answer
             if(isset($_GET['deletedstudId'])){
@@ -202,86 +196,19 @@
 
             }
 
+
             //Upload Checked File
             if(isset($_POST['upCheckedFile'])){
-
-              $qid  = $conn->real_escape_string($_GET['qid']);
-
-              $answerId  = $conn->real_escape_string($_POST['ansId']);
-              $studId = $conn->real_escape_string($_POST['studId']);
-              $acctype = "2";
-
-              $qDet = $conn->query("SELECT * FROM portal_quizzes WHERE quizzId = \"$qid\" AND uploadedby = \"$studId\"");
-              $data = $qDet->fetch_assoc();
-
-              $filename = $data['filename'];
-
-              $target_dir = "../uploads/checked/";
-              $target_file = $target_dir . basename($_FILES["checkedFile"]["name"]);
-              $uploadOk = 1;
-              $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-              $qtype = "checked";
-
-              if(move_uploaded_file($_FILES["checkedFile"]["tmp_name"], $target_file)){
-
-                $insert = $conn->query("INSERT INTO portal_quizzes (id,gradeid,sectionid,subjectid,quizzId,filename,filepath,uploadedby,acctype, quiztype)
-                                        VALUES (\"$answerId\",\"$classId\",\"$secId\",\"$subId\",\"$qid\",\"$filename\",\"$target_file\",\"$studId \",\"$acctype\",\"$qtype\")");
-
-                  if($insert == true){
-
-
-                    $deleteModule = $conn->query("UPDATE portal_quizzes SET stat = 2 WHERE id = \"$answerId\" AND quizzId = \"$qid\" AND uploadedby = \"$studId \"");
-
-                    if($deleteModule){
-
-                      echo '<script>alert("Quiz Checked Successfuly and Checked file Uploaded successfully  ");</script>';
-
-                    } else {
-
-                      echo $conn->error;
-
-                    }
-
-
-                  } else {
-
-                    echo $conn->error;
-
-                  }
-
-              } else {
-
-                echo 'Error Uploading File';
-                echo '<script>alert("Error Uploading File "'.$conn->error.')</script>';
-
-              }
-
-            } else {
-
-              //echo 'Failed to upload file';
-
-            }
-
-            //Section Details
-            $section = $conn->query("SELECT * FROM tblschool_section WHERE sectionid = \"$secId\"");
-
-            if($section->num_rows > 0){
-
-              $section = $section->fetch_assoc();
-
-              $section = $section['description'];
-
-            } else {
-
-              $section = "";
-
+        
+                echo '<script>alert("Working");</script>';
+    
             }
 
 
         ?>
         <div class="row">
           <div class="col-lg-12">
-            <h5 class="alert alert-success"> Section: <?= $section ?> | Subject: <?= $value['description'] ?> </h5>
+            <h5 class="alert alert-success"> Subject: <?= $value['description'] ?> </h5>
           <?php
 
           $subId = $conn->real_escape_string($value['subjectid']);
@@ -366,10 +293,9 @@
                 <tr>
                   <td> <b> Fullname </b> </td>
                   <td> <b> Status </b> </td>
-                  <td class="text-center"> <b> Upload Checked File </b> </td>
-                  <td> <b> Answer File </b> </td>
                   <td> <b> Checked File </b> </td>
-                  <!--<td colspan="3"> <b> Action </b> </td>-->
+                  <td> <b> Answer File </b> </td>
+                  <td colspan="3"> <b> Action </b> </td>
                 </tr>
               </thead>
               <tbody>
@@ -399,26 +325,8 @@
               }
 
               $studId = $modesc['uploadedby'];
-              $ansID = $modesc['id'];
-              $qid = $conn-> real_escape_string($_GET['qid']);
 
               $studData = $conn->query("SELECT * FROM portal_user_details WHERE userId = \"$studId\"");
-
-              $checked = $conn->query("SELECT * FROM portal_quizzes WHERE id = \"$ansID\" AND uploadedby = \"$studId\" AND quizzId = \"$qid\" AND quiztype = \"checked\"");
-
-              if($checked->num_rows > 0){
-
-                $CheckedData = $checked->fetch_assoc();
-
-                $checkedFile = '<a class="btn btn-xs btn-success" href="'.$CheckedData['filepath'].'" target="_blank"> View </a>';
-
-              } else {
-
-                $checkedFile = '<i> No Checked File Uploaded </i>';
-
-              }
-
-              $CheckedData = $checked->fetch_assoc();
 
               $dets = $studData->fetch_assoc();
 
@@ -434,19 +342,16 @@
                 <td> <?= $studfullname ?> </td>
                 <td> <?= $ansstat ?> </td>
                 <td>
-                  <form action="" method="POST" enctype="multipart/form-data">
-                      <input type="hidden" value="<?= $studId  ?>" class="form-control" name="studId">
-                      <input type="hidden" value="<?= $modesc['id']  ?>" class="form-control" name="ansId">
-                      <input type="file" placeholder="Upload Checked File" name="checkedFile" required>
-                      <input type="submit" class="btn btn-xs btn-success" value="Upload and Check" name="upCheckedFile">
-                  </form>
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        <input type="file" placeholder="Upload Checked File" name="checkedFile" required>
+                        <input type="submit" class="btn btn-sm btn-success" value="Upload" name="upCheckedFile">
+                    </form>
                 </td>
                 <td> <a class="btn btn-xs btn-primary" href="<?= $modesc['filepath'] ?>" target="_blank"> View </a> </td>
-                <td> <?= $checkedFile; ?> </td>
-                <!--<td> <a class="btn btn-xs btn-success" href="?classkey=<?= $classId ?>&seckey=<?= $secId ?>&key=<?= $subId ?>&qid=<?= $modesc['quizzId'] ?>&checkedstudId=<?= $modesc['uploadedby'] ?>"> Check </a> </td>
+                <td> <a class="btn btn-xs btn-success" href="?classkey=<?= $classId ?>&seckey=<?= $secId ?>&key=<?= $subId ?>&qid=<?= $modesc['quizzId'] ?>&checkedstudId=<?= $modesc['uploadedby'] ?>"> Check </a> </td>
                 <td> | </td>
                 <td> <a class="btn btn-xs btn-danger" href="?classkey=<?= $classId ?>&seckey=<?= $secId ?>&key=<?= $subId ?>&qid=<?= $modesc['quizzId'] ?>&deletedstudId=<?= $modesc['uploadedby'] ?>"> Delete Answer </a> </td>
-              </tr>-->
+              </tr>
 
           <?php
 
@@ -481,8 +386,11 @@
                 <div class="col-lg-6">
                   <input type="text" class="form-control" name="filename" placeholder="Filename" required>
                 </div>
-                <div class="col-lg-6" style="overflow:hidden;">
-                  <input type="file" name="file" id="exampleInputFile">
+                <div class="col-lg-6">
+                  <div class="custom-file">
+                    <input type="file" class="custom-file-input" name="file" id="exampleInputFile">
+                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                  </div>
                 </div>
               </div><br>
               <div class="row">

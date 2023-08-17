@@ -207,7 +207,7 @@
         <div class="row">
           <div class="col-lg-12 alert alert-sm alert-info">
             <div class="row">
-              <h4 class="col-md-4"> My Teacher's </h4>
+              <h4 class="col-md-4"> My Teachers </h4>
               <div class="col-md-4"></div>
               <div class="col-md-4 input-group input-group-sm text-right">
                 <input type="text" placeholder="Find in my teachers" id="teacherkey" onkeyup="searchteacher()" class="form-control">
@@ -224,6 +224,7 @@
           <?php
 
             $studentList = $func->teachers();
+            //$studentList = $func->all_faculty_user();
 
             if($studentList->num_rows > 0){
 
@@ -301,7 +302,7 @@
 
           <?php
 
-            $studentList = $func->all_schoolmate_user();
+            $studentList = $func->all_schoolmate_user($sectionid);
 
             if($studentList->num_rows > 0){
 

@@ -7,13 +7,14 @@
     require 'teacher-header.php';
 
 
-    //Add Student Process
+    //Add Announcement Process
     if(isset($_POST['post_announcement'])){
 
       $announcement = $conn->real_escape_string($_POST['announcement']);
       $id = $_SESSION['user_id'];
+      $aud = "allaudience";
 
-      $query = $conn->query("INSERT INTO portal_announcement (announcement, announcedBy) VALUES(\"$announcement\",\"$id\")");
+      $query = $conn->query("INSERT INTO portal_announcement (announcement, audience, announcedBy) VALUES(\"$announcement\",\"$aud\",\"$id\")");
 
       if($query == true){
 
@@ -39,8 +40,8 @@
 
       if($query == true){
 
-        $ann = "Announcement Deleted Successfully";
-        header('location:add-announcements.php');
+        echo "<script>alert('Announcement Deleted Successfully')</script>";
+        //header('location:add-announcements.php');
 
       } 
 
@@ -108,6 +109,19 @@
 
                   $fullname = $fullname['firstname'].' '.$fullname['surname'];
 
+                  if($id == $_SESSION['user_id']){
+
+                        $delAnn = '<div class="timeline-footer">
+                          <a class="btn btn-xs btn-danger float-right" name="delete_announcement" href="?announcementID='.$annData['id'].'"> Delete Announcement </a>
+                        </div>';
+                
+                  } else {
+
+                        $delAnn = '';
+                   
+                  }
+
+
               ?>
                 <div class="row">
                   <div class=" col-12 alert alert-sm alert-info">
@@ -117,9 +131,7 @@
                       <div class="timeline-body">
                         <?= $annData['announcement'] ?>
                       </div><hr>
-                      <div class="timeline-footer">
-                        <button class="btn btn-xs btn-danger float-right" name="delete_announcement"> <a href="?announcementID=<?= $annData['id'] ?>"> Delete Announcement </a></button>
-                      </div>
+                      <?= $delAnn ?>
                     </div>
                   </div>
                 </div><hr>

@@ -59,6 +59,26 @@
 
       $schoolData = $selstudschooldet->fetch_row();
 
+
+      //Update Email
+      if(isset($_POST['updateEmail'])){
+
+        @$email = $conn->real_escape_string($_POST['emailz']);
+
+        $upd = $conn->query("UPDATE portal_user_details SET email = \"$email\" WHERE userId = \"$studID\"");
+
+        if($email){
+
+            echo '<script>alert("Email Updated Successfuly");</script>';
+
+        } else {
+
+            echo $conn->error;
+
+        }
+
+      }
+
     ?>
 
     <!-- Main content -->
@@ -76,13 +96,23 @@
           </div>
           <div class="col-md-12 col-sm-12 col-lg-6">
             <div class="text-center"><br>
-              <h4> <b> Change Password </b> </h4><br><br>
+              <h4> <b> Change Password </b> </h4>
               <div class="col-lg-8 porm">
                 <input type="password" id="pass1" class="form-control" placeholder="Enter Student New Password"><br>
                 <input type="password" id="pass2" class="form-control" onkeyup="checkPazz()" placeholder="Re-type Student New Password">
                 <label id="ewor" class="text-red"><i fa fa-info><i><i> Password Not Match </i></label><br>
                 <input id="cpass" type="submit" onclick="changePass(<?= $studData['userId'] ?>)" value="Submit" class="btn btn-sm btn-warning">
               </div>
+
+              <hr><br>
+              <h4> <b> Update Email </b> </h4>
+              <div class="col-lg-8 porm">
+                <form action="" method="POST">
+                    <input type="email" class="form-control" name="emailz" value="<?= $studData['email'] ?>"><br>
+                    <input type="submit" value="Update Email" name="updateEmail" class="btn btn-sm btn-success">
+                </form>
+              </div>
+            </div>
             </div>
           </div>
         </div>
@@ -156,7 +186,7 @@
         <div class="row">
           <div class="col-12 res">
           <br><br>
-          <span class="alert alert-warning mt-5"> Quizzes </span>
+          <span class="alert alert-danger mt-5"> Quizzes </span>
           <br><br>
               <table id="quiz" class="table table-striped table-hover">
                 <thead>
@@ -208,7 +238,89 @@
                     <td> <?= ucfirst($subject) ?> </td>
                     <td> <?= $data['dateuploaded'] ?> </td>
                     <td> <b> <?= $status ?> </b> </td>
-                    <td> <a href="<?= $data['filepath'] ?>" class="btn btn-xs btn-info" target="_blank"> View Module </a> </td>
+                    <td> <a href="<?= $data['filepath'] ?>" class="btn btn-xs btn-info" target="_blank"> View Quiz </a> </td>
+                  </tr>
+
+                  <?php
+
+                    }
+
+                  } else {
+
+                  ?>
+
+                  <tr>
+                    <td colspan="5" class="text-center"> This student doesn't have quiz uploaded </td>
+                  </tr>
+
+                  <?php
+
+                  }
+
+                  ?>
+                </tbody>
+              </table>
+          </div>
+        </div>
+        <!-- End Quizzes -->
+
+        <!-- Tasks -->
+        <div class="row">
+          <div class="col-12 res">
+          <br><br>
+          <span class="alert alert-success mt-5"> Performance Tasks </span>
+          <br><br>
+              <table id="quiz" class="table table-striped table-hover">
+                <thead>
+                  <tr>
+                    <td> Tasks File Name </td>
+                    <td> Subject </td>
+                    <td> Date Uploaded </td>
+                    <td> Status </td>
+                    <td> Actions </td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+
+                  $id = $conn->real_escape_string($_GET['studKey']);
+
+                  $profMods = $func->profileTasks($id);
+
+                  if($profMods->num_rows > 0){
+
+                    while($data = $profMods->fetch_assoc()){
+
+                      $subKey = $data['subjectid'];
+
+                      $sub = $func->profilesubject($subKey);
+
+                      $subData = $sub->fetch_assoc();
+
+                      $subject = $subData['description'];
+
+                      if($data['stat'] == 1){
+
+                        $status = '<i class="text-danger"> Not Checked </i>';
+
+                      } elseif($data['stat'] == 2){
+
+                        $status = '<i class="text-success"> Checked </i>';
+
+                      } else {
+
+                        $status = '<i> For Re-upload </i>';
+
+                      }
+
+                  ?>
+
+                  <tr>
+                    <td> <?= $data['filename'] ?> </td>
+                    <td> <?= ucfirst($subject) ?> </td>
+                    <td> <?= $data['dateuploaded'] ?> </td>
+                    <td> <b> <?= $status ?> </b> </td>
+                    <td> <a href="<?= $data['filepath'] ?>" class="btn btn-xs btn-info" target="_blank"> View Task </a> </td>
                   </tr>
 
                   <?php

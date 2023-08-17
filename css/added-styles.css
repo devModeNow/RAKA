@@ -68,6 +68,19 @@
 	background-size: cover;
 }
 
+.login-logo{
+    position: relative;
+    z-index:2;
+}
+
+.trans{
+	position: absolute;
+	height:100%;
+	width:100%;
+	background:rgba(255,255,255,0.3);
+    z-index:1;
+}
+
 .liz{
 	position: relative;
 	height: 80%;
@@ -75,4 +88,5 @@
 	padding: 20px;
 	padding-bottom: 0px;
 	box-shadow: 0px 0px 10px 0px rgb(10,10,10);
+    z-index:9999;
 }

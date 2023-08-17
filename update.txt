@@ -1,0 +1,12 @@
+Update
+studentsubjects.php
+teacherquizzeslist.php
+teachertasklist.php
+
+Dbase
+portal_quizzes and portal_performance_task
+Make index the id column
+
+Footer Credits Remove
+
+functions.php in studannouncement function

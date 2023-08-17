@@ -207,7 +207,7 @@
                 <i class="nav-icon fas fa-users"></i>
                 <p>
                   Class
-                  <span class="right badge badge-danger"><?= $classCount ?></span>
+                  <!--<span class="right badge badge-danger"><?= $classCount ?></span>-->
                 </p>
               </a>
             </li>
@@ -216,6 +216,14 @@
                 <i class="nav-icon fas fa-book"></i>
                 <p>
                   Quiz
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="teacherpertask.php" class="nav-link">
+                <i class="nav-icon fas fa-book"></i>
+                <p>
+                  Perfomance Task
                 </p>
               </a>
             </li>

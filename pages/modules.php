@@ -148,10 +148,25 @@
 
             }
 
+            //Section Details
+            $section = $conn->query("SELECT * FROM tblschool_section WHERE sectionid = \"$secId\"");
+
+            if($section->num_rows > 0){
+
+              $section = $section->fetch_assoc();
+
+              $section = $section['description'];
+
+            } else {
+
+              $section = "";
+
+            }
+
         ?>
         <div class="row">
           <div class="col-lg-12">
-            <h5 class="alert alert-success"> Subject: <?= $value['description'] ?> </h5>
+            <h5 class="alert alert-success"> Section: <?= $section ?> | Subject: <?= $value['description'] ?> </h5>
           <?php
 
           $subId = $conn->real_escape_string($value['subjectid']);

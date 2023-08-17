@@ -28,12 +28,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h4 class="m-0 text-dark">Quizzes</h4>
+            <h4 class="m-0 text-dark">Performance Tasks</h4>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Quizzes</li>
+              <li class="breadcrumb-item active">Performance Tasks</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -60,11 +60,11 @@
             $subdesc = $subdesc['description'];
 
             $acctype = "1";
-            $announcement = $_SESSION['fname']." ".$_SESSION['lname']." uploaded a new quiz on ".$subdesc." subject.";
+            $announcement = $_SESSION['fname']." ".$_SESSION['lname']." uploaded a new task on ".$subdesc." subject.";
 
             $qtype = "creator";
 
-            $modId = 'quiz_'.rand(2,65484215);
+            $modId = 'perfTask_'.rand(2,65484215);
 
             $subDet = $func->subject_details($classId,$subId);
 
@@ -78,23 +78,23 @@
 
               $filename = $conn->real_escape_string($_POST['filename']);
 
-              $target_dir = "../uploads/quizzes/";
-              $target_file = $target_dir . basename($_FILES["file"]["name"]).rand(4,564841254);
+              $target_dir = "../uploads/performance tasks/";
+              $target_file = $target_dir . basename($_FILES["file"]["name"]).rand(4,9814345);
               $uploadOk = 1;
               $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
               if(move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)){
 
-                $insert = $conn->query("INSERT INTO portal_quizzes (gradeid,sectionid,subjectid,quizzId,filename,filepath,uploadedby,acctype, quiztype)
+                $insert = $conn->query("INSERT INTO portal_performance_task (gradeid,sectionid,subjectid,quizzId,filename,filepath,uploadedby,acctype, quiztype)
                                         VALUES (\"$classId\",\"$secId\",\"$subId\",\"$modId\",\"$filename\",\"$target_file\",\"$user_id\",\"$acctype\",\"$qtype\")");
 
                 if($insert == true){
 
-                  $query = $conn->query("INSERT INTO portal_announcement (announcement,audience,announcedBy) VALUES(\"$announcement\",\"$secId\",\"$user_id\")");
+                  $query = $conn->query("INSERT INTO portal_announcement (announcement, audience, announcedBy) VALUES(\"$announcement\",\"$secId\",\"$user_id\")");
 
                   if($query == true){
 
-                    echo '<script>alert("Quiz Uploaded")</script>';
+                    echo '<script>alert("Performance Tasks Uploaded")</script>';
 
                   } else {
 
@@ -122,16 +122,16 @@
             }
 
 
-            //delete Quiz
+            //delete Task
             if(isset($_GET['deleteid'])){
 
               $delId = $conn->real_escape_string($_GET['deleteid']);
 
-              $deleteModule = $conn->query("UPDATE portal_quizzes SET stat = 0 WHERE quizzId = \"$delId\" AND quiztype = \"creator\"");
+              $deleteModule = $conn->query("UPDATE portal_performance_task SET stat = 0 WHERE quizzId = \"$delId\" AND quiztype = \"creator\"");
 
               if($deleteModule){
 
-                echo '<script>alert("Quiz Deleted Successfuly");</script>';
+                echo '<script>alert("Performance Task Deleted Successfuly");</script>';
 
               } else {
 
@@ -142,16 +142,16 @@
             }
 
 
-            //Close Quiz
+            //Close Task
             if(isset($_GET['closeid'])){
 
               $closeId = $conn->real_escape_string($_GET['closeid']);
 
-              $deleteModule = $conn->query("UPDATE portal_quizzes SET stat = 3 WHERE quizzId = \"$closeId\" AND quiztype = \"creator\"");
+              $deleteModule = $conn->query("UPDATE portal_performance_task SET stat = 3 WHERE quizzId = \"$closeId\" AND quiztype = \"creator\"");
 
               if($deleteModule){
 
-                echo '<script>alert("Quiz Closed Successfuly");</script>';
+                echo '<script>alert("Task Closed Successfuly");</script>';
 
               } else {
 
@@ -162,7 +162,7 @@
             }
 
 
-            //Check Quiz
+            //Check Task
             /*if(isset($_GET['checkedstudId'])){
 
               $id = $conn->real_escape_string($_GET['qid']);
@@ -182,17 +182,17 @@
 
             }*/
 
-            //Delete Quiz Answer
+            //Delete Task Answer
             if(isset($_GET['deletedstudId'])){
 
               $id = $conn->real_escape_string($_GET['qid']);
               $deletedstudId = $conn->real_escape_string($_GET['deletedstudId']);
 
-              $deleteModule = $conn->query("UPDATE portal_quizzes SET stat = 0 WHERE quizzId = \"$id\" AND uploadedby = \"$deletedstudId\" AND quiztype = \"respondent\"");
+              $deleteModule = $conn->query("UPDATE portal_performance_task SET stat = 0 WHERE quizzId = \"$id\" AND uploadedby = \"$deletedstudId\" AND quiztype = \"respondent\"");
 
               if($deleteModule){
 
-                echo '<script>alert("Quiz Answer Deleted Successfuly, Student can re-upload his/her answer. Thank you.");</script>';
+                echo '<script>alert("Task Answer Deleted Successfuly, Student can re-upload his/her answer. Thank you.");</script>';
 
               } else {
 
@@ -211,7 +211,7 @@
               $studId = $conn->real_escape_string($_POST['studId']);
               $acctype = "2";
 
-              $qDet = $conn->query("SELECT * FROM portal_quizzes WHERE quizzId = \"$qid\" AND uploadedby = \"$studId\"");
+              $qDet = $conn->query("SELECT * FROM portal_performance_task WHERE quizzId = \"$qid\" AND uploadedby = \"$studId\"");
               $data = $qDet->fetch_assoc();
 
               $filename = $data['filename'];
@@ -224,17 +224,17 @@
 
               if(move_uploaded_file($_FILES["checkedFile"]["tmp_name"], $target_file)){
 
-                $insert = $conn->query("INSERT INTO portal_quizzes (id,gradeid,sectionid,subjectid,quizzId,filename,filepath,uploadedby,acctype, quiztype)
+                $insert = $conn->query("INSERT INTO portal_performance_task (id,gradeid,sectionid,subjectid,quizzId,filename,filepath,uploadedby,acctype, quiztype)
                                         VALUES (\"$answerId\",\"$classId\",\"$secId\",\"$subId\",\"$qid\",\"$filename\",\"$target_file\",\"$studId \",\"$acctype\",\"$qtype\")");
 
                   if($insert == true){
 
 
-                    $deleteModule = $conn->query("UPDATE portal_quizzes SET stat = 2 WHERE id = \"$answerId\" AND quizzId = \"$qid\" AND uploadedby = \"$studId \"");
+                    $deleteModule = $conn->query("UPDATE portal_performance_task SET stat = 2 WHERE id = \"$answerId\" AND quizzId = \"$qid\" AND uploadedby = \"$studId \"");
 
                     if($deleteModule){
 
-                      echo '<script>alert("Quiz Checked Successfuly and Checked file Uploaded successfully  ");</script>';
+                      echo '<script>alert("Task Checked Successfuly and Checked file Uploaded successfully  ");</script>';
 
                     } else {
 
@@ -287,7 +287,7 @@
           $subId = $conn->real_escape_string($value['subjectid']);
           $secId = $conn->real_escape_string($_GET['seckey']);
 
-          $modulesdetails = $func->quiz_details($subId, $secId);
+          $modulesdetails = $func->task_details($subId, $secId);
 
           if($modulesdetails->num_rows > 0){
 
@@ -295,11 +295,11 @@
 
               if($modesc['stat'] == 1){
 
-                $quizStat = '<label> Quiz Status: <i class="text-yellow"> Open </i> </label>';
+                $quizStat = '<label> Task Status: <i class="text-yellow"> Open </i> </label>';
 
               } elseif($modesc['stat'] == 3){
 
-                $quizStat = '<label> Quiz Status: <i class="text-danger"> Close </i> </label>';
+                $quizStat = '<label> Task Status: <i class="text-danger"> Close </i> </label>';
                 
               }
 
@@ -321,10 +321,10 @@
                   View Respondents <i class="fas fa-users"></i>
                 </a><hr>
                 <a href="?classkey=<?= $classId ?>&seckey=<?= $secId ?>&key=<?= $subId ?>&closeid=<?= $modesc['quizzId'] ?>" class="small-box-footer text-danger">
-                  Close Quiz <i class="fas fa-minus"></i>
+                  Close Task <i class="fas fa-minus"></i>
                 </a>
                 <a href="?classkey=<?= $classId ?>&seckey=<?= $secId ?>&key=<?= $subId ?>&deleteid=<?= $modesc['quizzId'] ?>" class="small-box-footer text-danger">
-                  Delete Quiz <i class="fas fa-trash"></i>
+                  Delete Task <i class="fas fa-trash"></i>
                 </a>
               </div>
             </div>
@@ -336,7 +336,7 @@
 
           ?>
 
-            <h5> No Quiz Uploaded in this subject </h5>
+            <h5> No Task Uploaded in this subject </h5>
 
           <?php
 
@@ -353,7 +353,7 @@
 
             $id = $conn->real_escape_string($_GET['qid']);
 
-            $qdet = $conn->query("SELECT * FROM portal_quizzes WHERE quizzId = \"$id\"");
+            $qdet = $conn->query("SELECT * FROM portal_performance_task WHERE quizzId = \"$id\"");
 
             $qdet = $qdet->fetch_assoc();
 
@@ -378,7 +378,7 @@
           $subId = $conn->real_escape_string($value['subjectid']);
           $secId = $conn->real_escape_string($_GET['seckey']);
 
-          $modulesdetails = $func->quiz_answer_details($subId, $secId, $id);
+          $modulesdetails = $func->task_answer_details($subId, $secId, $id);
 
           if($modulesdetails->num_rows > 0){
 
@@ -404,7 +404,7 @@
 
               $studData = $conn->query("SELECT * FROM portal_user_details WHERE userId = \"$studId\"");
 
-              $checked = $conn->query("SELECT * FROM portal_quizzes WHERE id = \"$ansID\" AND uploadedby = \"$studId\" AND quizzId = \"$qid\" AND quiztype = \"checked\"");
+              $checked = $conn->query("SELECT * FROM portal_performance_task WHERE id = \"$ansID\" AND uploadedby = \"$studId\" AND quizzId = \"$qid\" AND quiztype = \"checked\"");
 
               if($checked->num_rows > 0){
 
@@ -475,7 +475,7 @@
 
         <div class="row">
           <div class="col-lg-12">
-            <h4> Upload Quiz </h4>
+            <h4> Upload Task </h4>
             <form action="" method="post" enctype="multipart/form-data">
               <div class="row">
                 <div class="col-lg-6">
