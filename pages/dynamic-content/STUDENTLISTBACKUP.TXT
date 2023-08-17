@@ -1,0 +1,118 @@
+<?php
+
+  if(isset($_SESSION['user_id'])){
+
+    require 'teacher-header.php';
+
+?>
+
+  <?php require 'header.php'; ?>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h4 class="m-0 text-dark">Students</h4>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Students</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+          <?php
+
+
+          $classList = $func->teacher_classes();
+
+        if($classList->num_rows > 0){
+
+          while($classData = $classList->fetch_assoc()){
+            
+
+          ?>
+          <div class="col-md-4">
+            <!-- Widget: user widget style 1 -->
+            <div class="box box-widget widget-user">
+              <!-- Add the bg color to the header using any of the bg-* classes -->
+              <div class="widget-user-header bg-info">
+                <h4 class="widget-user-username"> <?= $studData['firstname'].' '.$studData['lastname'] ?> </h4>
+                <h6 class="widget-user-desc"><?= $studData['gradeDesc'] ?></h6>
+              </div>
+              <div class="widget-user-image">
+                <img class="img-circle" src="<?= '../'.$data['profile_pic'] ?>" alt="User Avatar">
+              </div><br><br>
+              <div class="box-footer">
+                <div class="row">
+                  <div class="col-sm-4"></div>
+                  <!-- /.col -->
+                  <div class="col-sm-4">
+                    <div class="description-block">
+              <button class="btn btn-xs btn-info"> View Details </button>
+                    </div>
+                    <!-- /.description-block -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-sm-4"></div>
+                  <!-- /.col -->
+                </div>
+                <!-- /.row -->
+              </div>
+            </div>
+            <!-- /.widget-user -->
+          </div>
+          <?php 
+
+              }
+
+            } else {
+
+          ?>
+
+          <h3 class="col-12 alert alert-sm alert-info text-center"> You have no class advisory to be handeled. </h3>
+
+          <?php
+
+            }
+
+          ?>
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <strong>Copyright &copy; 2020 <a href="#">RJL Software Development</a>.</strong>
+    All rights reserved.
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<?php
+
+  require 'footer.php'; 
+
+  }
+
+?>
